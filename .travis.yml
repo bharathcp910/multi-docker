@@ -1,0 +1,26 @@
+sudo: required
+language: generic
+services:
+    - docker
+
+before_install:
+    - docker build -t elendil910/react-test -f ./client/Dockerfile.dev ./client
+
+scripts:
+    - docker run CI=true elendil910/react-test npm test
+
+after_success:
+    - docker build -t elendil910/multi-client ./client
+    - docker build -t elendil910/multi-nginx ./nginx
+    - docker build -t elendil910/multi-server ./server
+    - docker build -t elendil910/multi-worker ./worker
+
+
+    # Login to Docker
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --passowrd-stdin
+
+    # Push the images to docker hub
+    - docker push elendil910/multi-client
+    - docker push elendil910/multi-nginx
+    - docker push elendil910/multi-server
+    - docker push elendil910/multi-worker
