@@ -7,7 +7,7 @@ before_install:
     - docker build -t elendil910/react-test -f ./client/Dockerfile.dev ./client
 
 scripts:
-    - docker run CI=true elendil910/react-test npm test
+    - docker run -e CI=true elendil910/react-test npm test
 
 after_success:
     - docker build -t elendil910/multi-client ./client
