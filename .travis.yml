@@ -17,7 +17,7 @@ after_success:
 
 
     # Login to Docker
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --passowrd-stdin
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
     # Push the images to docker hub
     - docker push elendil910/multi-client
